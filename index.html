@@ -236,7 +236,10 @@
   .info .price { font-size: 1.2rem; font-weight: 700; margin-bottom: 18px; }
   .info p { color: var(--ink-soft); margin: 0 0 24px; }
   .info p.note { margin: -12px 0 24px; font-size: .82rem; color: #8a8073; }
-  .info .btns { margin-top: auto; }
+  .info .btns { margin-top: auto; flex-direction: column; align-items: flex-start; gap: 10px; }
+  /* "구매하기" 아래 작은 카톡 문의 링크 */
+  .info .sub-link { font-size: .85rem; color: var(--ink-soft); text-decoration: underline; text-underline-offset: 3px; padding: 2px 4px; }
+  .info .sub-link:hover { color: var(--ink); }
   .close { position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--paper); font-size: 1.4rem; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
 
   .btns { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -568,54 +571,54 @@ const PRODUCTS = [
     images: ["church_keyring (1).jpg", "church_keyring (2).jpg", "pen_black.jpg", "pen_white.jpg"]
   },
 
-  /* ───── 플라워 ───── (구매 링크 없이 카카오톡으로 주문·문의. 이 순서대로 화면에 나옵니다) */
+  /* ───── 플라워 ───── (이 순서대로 화면에 나옵니다. 가격 없는 상품은 link: "" 로 두면 카톡 문의 버튼) */
   {
-    category: "플라워", name: "문구 각인 아크릴 플라워백", price: "", link: "",
+    category: "플라워", name: "문구 각인 아크릴 플라워백", price: "30,000원", link: STORE,
     desc: "원하는 문구를 새긴 아크릴 백에 실크플라워를 담았어요. 졸업·생일·감사 선물",
     images: ["flower_bag.jpg"]
   },
   {
-    category: "플라워", name: "달항아리 플라워", price: "35,000원", link: "",
+    category: "플라워", name: "달항아리 플라워", price: "35,000원", link: STORE,
     desc: "고운 달항아리에 실크플라워를 담은 감사·축하 선물",
     images: ["moon_jar.jpg"]
   },
   {
-    category: "플라워", name: "꽃 용돈박스", price: "29,000원", link: "",
+    category: "플라워", name: "꽃 용돈박스", price: "29,000원", link: STORE,
     desc: "꽃과 용돈 봉투를 함께 담는 어버이날·생신 선물 박스",
     images: ["money_box.jpg", "money_box_2.jpg"]
   },
   {
-    category: "플라워", name: "캘리그라피 플라워 액자", price: "32,000원", link: "",
+    category: "플라워", name: "캘리그라피 플라워 액자", price: "32,000원", link: STORE,
     desc: "손글씨 캘리그라피와 프리저브드 플라워로 만든 액자. 원하는 문구로 주문 제작",
     images: ["calli_frame.jpg"]
   },
   {
-    category: "플라워", name: "프리저브드 플라워 바구니", price: "29,900원", link: "",
+    category: "플라워", name: "프리저브드 플라워 바구니", price: "29,900원", link: STORE,
     desc: "시들지 않는 프리저브드 플라워와 손글씨 메시지를 담은 원목 바구니",
     images: ["preserved_basket.jpg"]
   },
   {
-    category: "플라워", name: "프리저브드 플라워 시계", price: "", link: "",
+    category: "플라워", name: "프리저브드 플라워 시계", price: "39,000원", link: STORE,
     desc: "유리 돔 안에 프리저브드 플라워를 담은 탁상시계",
     images: ["flower_clock.jpg"]
   },
   {
-    category: "플라워", name: "실크플라워 호접란 화분", price: "69,000원", link: "",
+    category: "플라워", name: "실크플라워 호접란 화분", price: "69,000원", link: STORE,
     desc: "손글씨 메시지 카드를 꽂은 호접란 화분. 개업·승진 축하 선물",
     images: ["orchid.jpg"]
   },
   {
-    category: "플라워", name: "실크플라워 센터피스", price: "", link: "",
+    category: "플라워", name: "실크플라워 센터피스", price: "100,000원~", link: "",
     desc: "시들지 않는 실크플라워로 만든 풍성한 꽃 장식",
     images: ["centerpiece.jpg"]
   },
   {
-    category: "플라워", name: "프리저브드 웨딩 청첩장 액자", price: "", link: "",
+    category: "플라워", name: "프리저브드 웨딩 청첩장 액자", price: "59,000원~", link: "",
     desc: "결혼 날짜와 두 사람 이름을 담은 프리저브드 플라워 액자",
     images: ["wedding_frame.jpg"]
   },
   {
-    category: "플라워", name: "하트 인형봉", price: "", link: "",
+    category: "플라워", name: "하트 인형봉", price: "15,000원", link: STORE,
     desc: "하트 캡슐 안에 인형을 담은 졸업·공연 선물",
     images: ["heart_wand.jpg"]
   },
@@ -848,9 +851,18 @@ function openModal(p, start = 0) {
   a.href = p.link || KAKAO;
   a.target = "_blank";
   a.rel = "noopener";
-  // 구매 링크가 있으면 스토어로, 없으면 카카오톡으로 (가격이 있으면 "주문", 없으면 "문의")
-  a.textContent = p.link ? "구매하러 가기" : (p.price ? "카톡으로 주문하기" : "카톡 문의");
+  // 구매 링크가 있으면 "구매하기"(스토어) + 아래에 작은 "카톡 문의" 링크, 없으면 카카오톡 버튼
+  a.textContent = p.link ? "구매하기" : (p.price ? "카톡으로 주문하기" : "카톡 문의");
   btns.appendChild(a);
+  if (p.link) {
+    const talk = document.createElement("a");
+    talk.className = "sub-link";
+    talk.href = KAKAO;
+    talk.target = "_blank";
+    talk.rel = "noopener";
+    talk.textContent = "카톡 문의";
+    btns.appendChild(talk);
+  }
   modal.showModal();
 }
 modal.addEventListener("click", e => {
