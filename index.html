@@ -5,6 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>엘림창작소 · Elim Creative Studio</title>
 <meta name="description" content="손글씨와 꽃으로 마음을 전합니다. 포토 굿즈·캘리그라피 말씀 굿즈와 실크플라워·프리저브드 플라워를 만드는 엘림창작소입니다.">
+
+<!-- 카카오톡·문자로 주소를 보낼 때 나오는 미리보기 (이미지는 전체 주소로 적어야 합니다) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="엘림창작소 · Elim Creative Studio">
+<meta property="og:description" content="손글씨와 꽃으로 마음을 전합니다.">
+<meta property="og:url" content="https://elimcreative.github.io/elim-homepage/">
+<meta property="og:image" content="https://elimcreative.github.io/elim-homepage/images/profile_square.jpg">
+<meta property="og:image:width" content="1000">
+<meta property="og:image:height" content="1000">
+
+<!-- 브라우저 탭 아이콘 -->
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
@@ -49,9 +63,10 @@
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--line);
   }
-  .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .nav { display: flex; align-items: center; justify-content: space-between; min-height: 64px; padding: 8px 0; }
   .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-  .logo svg { flex: none; }
+  /* 헤더 로고: 심볼(높이 48px) + "엘림창작소" 글자 */
+  .logo-symbol { height: 48px; width: auto; flex: none; }
   .logo b { font-family: var(--serif); font-size: 1.2rem; letter-spacing: .02em; }
   .logo small { display: block; font-size: .68rem; color: var(--ink-soft); letter-spacing: .14em; line-height: 1; }
   .nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; font-size: .95rem; }
@@ -236,7 +251,9 @@
   .qr span { display: block; margin-top: 8px; font-size: .88rem; color: var(--ink-soft); }
 
   footer { padding: 36px 0 48px; font-size: .85rem; color: var(--ink-soft); }
-  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .footer-brand { display: flex; align-items: center; gap: 14px; }
+  .footer-logo { width: 160px; height: auto; flex: none; }
 
   @media (max-width: 860px) {
     .nav ul { display: none; }
@@ -262,15 +279,9 @@
 
 <header>
   <nav class="wrap nav">
-    <a class="logo" href="#top" aria-label="엘림창작소 홈">
-      <!-- 엘림의 샘과 종려나무를 단순화한 마크 -->
-      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
-        <circle cx="17" cy="17" r="16" fill="#5f7448"/>
-        <path d="M17 25V12" stroke="#faf6ef" stroke-width="1.8" stroke-linecap="round"/>
-        <path d="M17 12c-3-3-7-3-9-1.5M17 12c3-3 7-3 9-1.5M17 12c-2-3.5-1.5-6 0-7.5M17 12c2-3.5 1.5-6 0-7.5" stroke="#faf6ef" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-        <path d="M9 26c2.5-1.6 5.5-1.6 8 0s5.5 1.6 8 0" stroke="#e9a23b" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-      </svg>
-      <span><b>엘림창작소</b><small>ELIM CREATIVE STUDIO</small></span>
+    <a class="logo" href="#top" id="logo-link" aria-label="엘림창작소 맨 위로">
+      <img class="logo-symbol" src="images/logo_symbol.png" alt="">
+      <b>엘림창작소</b>
     </a>
     <ul>
       <li><a href="#story">브랜드 이야기</a></li>
@@ -430,8 +441,11 @@
 
 <footer>
   <div class="wrap">
-    <span>© <span id="year"></span> 엘림창작소 Elim Creative Studio<br><small>일부 이미지는 연출 이미지입니다.</small></span>
-    <a href="#top">맨 위로 ↑</a>
+    <div class="footer-brand">
+      <img class="footer-logo" src="images/logo.png" alt="엘림창작소 Elim Creative Studio">
+      <span>© <span id="year"></span> 엘림창작소 Elim Creative Studio<br><small>일부 이미지는 연출 이미지입니다.</small></span>
+    </div>
+    <a href="#top" data-to-top>맨 위로 ↑</a>
   </div>
 </footer>
 
@@ -736,6 +750,15 @@ modal.addEventListener("keydown", e => {
 });
 
 document.getElementById("year").textContent = new Date().getFullYear();
+
+// 로고·"맨 위로"를 누르면 페이지 맨 위로 부드럽게 이동
+document.querySelectorAll("#logo-link, [data-to-top]").forEach(a => {
+  a.addEventListener("click", e => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    history.replaceState(null, "", location.pathname + location.search);
+  });
+});
 // 주소 끝에 ?g=flower 또는 ?g=goods 를 붙이면 그 갈래가 선택된 채로 열립니다
 const startGroup = new URLSearchParams(location.search).get("g");
 setGroup(GROUPS[startGroup] ? startGroup : "all");
