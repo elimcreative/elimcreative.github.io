@@ -160,7 +160,10 @@
   .card { cursor: pointer; text-align: left; color: inherit; border-radius: 14px; }
   .card:focus-visible { outline: 2px solid var(--olive); outline-offset: 4px; }
   .card .thumb { position: relative; aspect-ratio: 1; border-radius: 14px; overflow: hidden; background: var(--bg); touch-action: pan-y; }
-  .card.is-flower .thumb { background: var(--rose-bg); }
+  /* 플라워 상품 카드: 아주 연한 로즈베이지 배경 */
+  .card.is-flower { background: var(--rose-bg); border: 1px solid var(--rose-line); padding: 10px 10px 14px; }
+  .card.is-flower .tag, .card.is-flower h3, .card.is-flower .price { padding-inline: 4px; }
+  .card.is-flower .thumb { background: var(--rose-bg); border-radius: 10px; }
   .card .thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease, opacity .25s ease; }
   .card:hover .thumb img { transform: scale(1.04); }
   .card .count { position: absolute; right: 10px; top: 10px; font-size: .75rem; padding: 2px 9px; border-radius: 999px; background: rgba(43,38,32,.65); color: #fff; }
@@ -541,7 +544,37 @@ const PRODUCTS = [
     images: ["church_keyring (1).jpg", "church_keyring (2).jpg"]
   },
 
-  /* ───── 플라워 ───── (사진을 넣은 뒤 여기에 추가해 주세요) */
+  /* ───── 플라워 ───── (구매 링크 없이 "카톡 문의" 버튼으로 연결) */
+  {
+    category: "플라워", name: "문구 각인 아크릴 플라워백", price: "", link: "",
+    desc: "원하는 문구를 새긴 아크릴 백에 실크플라워를 담았어요. 졸업·생일·감사 선물",
+    images: ["flower_bag.jpg"]
+  },
+  {
+    category: "플라워", name: "인형 꽃다발", price: "", link: "",
+    desc: "귀여운 인형과 비누꽃으로 만든 뽀글이 꽃다발",
+    images: ["doll_bouquet.jpg"]
+  },
+  {
+    category: "플라워", name: "실크플라워 센터피스", price: "", link: "",
+    desc: "시들지 않는 실크플라워로 만든 풍성한 꽃 장식",
+    images: ["centerpiece.jpg"]
+  },
+  {
+    category: "플라워", name: "프리저브드 웨딩 날짜 액자", price: "", link: "",
+    desc: "결혼 날짜와 두 사람 이름을 담은 프리저브드 플라워 액자",
+    images: ["wedding_frame.jpg"]
+  },
+  {
+    category: "플라워", name: "프리저브드 플라워 시계", price: "", link: "",
+    desc: "유리 돔 안에 프리저브드 플라워를 담은 탁상시계",
+    images: ["flower_clock.jpg"]
+  },
+  {
+    category: "플라워", name: "하트 인형봉", price: "", link: "",
+    desc: "하트 캡슐 안에 인형을 담은 졸업·공연 선물",
+    images: ["heart_wand.jpg"]
+  },
 ];
 
 /* 분류 버튼 — 커스텀 굿즈 / 플라워 아래에 이 순서대로 세부 버튼이 만들어집니다 */
@@ -582,7 +615,10 @@ const state = { group: "all", sub: "all" };
 function renderFilters() {
   filters.innerHTML = "";
   if (state.group === "all") return;
-  ["all", ...GROUPS[state.group].subs].forEach(s => {
+  // 실제로 상품이 있는 세부 분류만 버튼으로 보여 줍니다 (빈 버튼 방지)
+  const subs = GROUPS[state.group].subs.filter(s => PRODUCTS.some(p => p.group === state.group && p.sub === s));
+  if (!subs.length) return;
+  ["all", ...subs].forEach(s => {
     const b = document.createElement("button");
     b.type = "button";
     b.textContent = s === "all" ? "전체" : s;
@@ -735,7 +771,7 @@ function openModal(p, start = 0) {
   a.href = p.link || KAKAO;
   a.target = "_blank";
   a.rel = "noopener";
-  a.textContent = p.link ? "구매하러 가기" : "카카오톡으로 문의하기";
+  a.textContent = p.link ? "구매하러 가기" : "카톡 문의";
   btns.appendChild(a);
   modal.showModal();
 }
