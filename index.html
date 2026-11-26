@@ -197,6 +197,7 @@
     display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; /* 상품 이름 최대 2줄 */
   }
   .card .price { color: var(--ink); font-size: .98rem; font-weight: 700; margin-top: auto; } /* 가격은 모든 상품 같은 굵은 글씨 */
+  .price-note { display: block; margin-top: 2px; font-size: .74rem; font-weight: 400; color: var(--ink-soft); }
   /* 가격이 "문의"인 상품: 카카오톡 문의 버튼 */
   .price-cta {
     display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin-top: 6px;
@@ -508,7 +509,7 @@ const KAKAO = "http://pf.kakao.com/_JmxbGn/chat";
        category : "포토 굿즈" / "캘리그라피·말씀" / "플라워" 중 하나
                   (플라워는 "플라워 > 실크플라워", "플라워 > 프리저브드 플라워", "플라워 > 꽃+굿즈 선물세트" 처럼 세부 분류를 붙일 수 있어요)
        name     : 상품명
-       price    : 가격. 예) "15,000원". 비워 두면 "문의"로 표시
+       price    : 가격. 예) "15,000원". 비워 두면 "카톡으로 문의하기" 버튼, "31,000원~"처럼 ~를 붙이면 아래에 "크기·구성에 따라 달라져요"
        link     : 구매 링크. 상품별 링크가 없으면 STORE (스마트스토어 첫 화면)
        desc     : 상품을 눌렀을 때 나오는 짧은 설명
        note     : (선택) 설명 아래 작은 글씨 안내. 예) "일부 이미지는 연출 이미지입니다."
@@ -600,7 +601,7 @@ const PRODUCTS = [
   },
   {
     category: "플라워", name: "실크플라워 호접란 화분", price: "69,000원", link: "",
-    desc: "손글씨 메시지 카드를 꽂은 호접란 화분. 개업·승진 축하 선물, 기업·단체 주문 문의 환영",
+    desc: "손글씨 메시지 카드를 꽂은 호접란 화분. 개업·승진 축하 선물",
     images: ["orchid.jpg"]
   },
   {
@@ -641,6 +642,14 @@ PRODUCTS.forEach(p => Object.assign(p, parseCat(p.category)));
 
 const src = f => "images/" + encodeURIComponent(f);
 const priceText = p => p ? p : "문의";
+// 가격 끝에 "~"가 붙으면(예: "31,000원~") 가격 아래에 작은 안내를 붙입니다
+const isFromPrice = p => /~\s*$/.test(p || "");
+const priceNoteEl = () => {
+  const s = document.createElement("small");
+  s.className = "price-note";
+  s.textContent = "크기·구성에 따라 달라져요";
+  return s;
+};
 // 사진이 아직 없는 상품에 쓰는 자리 표시 그림
 const NO_PHOTO = "data:image/svg+xml," + encodeURIComponent(
   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><rect width="400" height="400" fill="#f1eadd"/>' +
@@ -720,6 +729,7 @@ function makeCard(p) {
   const priceEl = card.querySelector(".price");
   if (p.price) {
     priceEl.textContent = p.price;
+    if (isFromPrice(p.price)) priceEl.appendChild(priceNoteEl());
   } else {
     // 가격이 "문의"인 상품은 회색 글자 대신 눈에 띄는 카카오톡 문의 버튼
     const cta = document.createElement("a");
@@ -824,7 +834,9 @@ function openModal(p, start = 0) {
   modal.classList.toggle("is-flower", p.group === "flower");
   document.getElementById("m-tag").textContent = p.sub || GROUPS[p.group].label;
   document.getElementById("m-title").textContent = p.name;
-  document.getElementById("m-price").textContent = priceText(p.price);
+  const mPrice = document.getElementById("m-price");
+  mPrice.textContent = priceText(p.price);
+  if (isFromPrice(p.price)) mPrice.appendChild(priceNoteEl());
   document.getElementById("m-desc").textContent = p.desc || "";
   const note = document.getElementById("m-note");
   note.textContent = p.note || "";
