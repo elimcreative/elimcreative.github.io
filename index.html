@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>엘림창작소 · Elim Creative Studio</title>
+<meta name="description" content="손글씨와 꽃으로 마음을 전합니다. 포토 굿즈·캘리그라피 말씀 굿즈와 실크플라워·프리저브드 플라워를 만드는 엘림창작소입니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf6ef;
+    --bg-deep: #f1eadd;
+    --paper: #ffffff;
+    --ink: #2b2620;
+    --ink-soft: #6a6157;
+    --line: #e4dccd;
+    --olive: #5f7448;
+    --olive-deep: #485a36;
+    --sun: #e9a23b;
+    --rose-bg: #f8eeea;
+    --rose: #b9736a;
+    --rose-deep: #9a5a52;
+    --rose-line: #ecd9d2;
+    --radius: 18px;
+    --serif: "Gowun Batang", serif;
+    --sans: "Noto Sans KR", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.7;
+    word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; }
+  .wrap { width: min(1120px, 100% - 32px); margin-inline: auto; }
+
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo svg { flex: none; }
+  .logo b { font-family: var(--serif); font-size: 1.2rem; letter-spacing: .02em; }
+  .logo small { display: block; font-size: .68rem; color: var(--ink-soft); letter-spacing: .14em; line-height: 1; }
+  .nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; font-size: .95rem; }
+  .nav ul a { text-decoration: none; color: var(--ink-soft); }
+  .nav ul a:hover { color: var(--ink); }
+
+  /* Hero */
+  .hero { padding: 72px 0 88px; }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; }
+  .eyebrow { color: var(--olive); font-size: .85rem; font-weight: 700; letter-spacing: .16em; margin: 0 0 14px; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 700; line-height: 1.35; margin: 0; }
+  h1 { font-size: clamp(2.1rem, 4.6vw, 3.3rem); }
+  .hero p.lead { font-size: 1.08rem; color: var(--ink-soft); margin: 22px 0 32px; max-width: 30em; }
+
+  /* 큰 갈래 버튼 2개 */
+  .big-picks { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .big-pick {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
+    padding: 22px 22px 20px; border-radius: var(--radius); cursor: pointer; text-align: left;
+    font: inherit; color: var(--ink); border: 1px solid var(--line); background: var(--paper);
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .big-pick:hover { transform: translateY(-2px); box-shadow: 0 14px 28px -18px rgba(60,45,25,.45); }
+  .big-pick strong { font-family: var(--serif); font-size: 1.4rem; display: flex; align-items: center; gap: 8px; }
+  .big-pick strong::after { content: "→"; font-family: var(--sans); font-size: 1rem; color: var(--olive); transition: transform .2s ease; }
+  .big-pick:hover strong::after { transform: translateX(3px); }
+  .big-pick span { font-size: .85rem; color: var(--ink-soft); }
+  .big-pick.flower { background: var(--rose-bg); border-color: var(--rose-line); }
+  .big-pick.flower strong::after { color: var(--rose); }
+
+  .hero-art { position: relative; aspect-ratio: 1 / 1.02; }
+  .hero-art figure { position: absolute; margin: 0; border-radius: var(--radius); overflow: hidden; box-shadow: 0 18px 40px -18px rgba(60,45,25,.35); background: var(--paper); }
+  .hero-art img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-art .a { inset: 0 28% 22% 0; }
+  .hero-art .b { inset: 34% 0 0 46%; border: 6px solid var(--bg); }
+
+  /* Sections */
+  section { padding: 88px 0; }
+  .section-head { text-align: center; margin-bottom: 48px; }
+  .section-head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+  .section-head p { color: var(--ink-soft); margin: 12px auto 0; max-width: 34em; }
+
+  /* Story */
+  .story { background: var(--bg-deep); }
+  .story .wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 56px; align-items: center; }
+  .verse {
+    margin: 0; font-family: var(--serif); font-size: 1.25rem; line-height: 1.9;
+    padding: 36px 32px; background: var(--paper); border-radius: var(--radius); position: relative;
+  }
+  .verse cite { display: block; margin-top: 14px; font-style: normal; font-size: .9rem; color: var(--olive); font-family: var(--sans); }
+  .story h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); margin-bottom: 18px; }
+  .story p { color: var(--ink-soft); margin: 0 0 14px; }
+
+  /* Lines of work */
+  .lines { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .line-card {
+    display: grid; grid-template-rows: 260px auto; background: var(--paper);
+    border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line);
+  }
+  .line-card > img, .line-card > svg { width: 100%; height: 100%; object-fit: cover; }
+  .line-card div { padding: 26px 28px 30px; }
+  .line-card h3 { font-size: 1.35rem; margin-bottom: 8px; }
+  .line-card p { margin: 0 0 16px; color: var(--ink-soft); }
+  .line-card a { color: var(--olive-deep); font-weight: 500; text-decoration: none; }
+  .line-card a:hover { text-decoration: underline; }
+  .line-card.flower { background: var(--rose-bg); border-color: var(--rose-line); }
+  .line-card.flower a { color: var(--rose-deep); }
+
+  /* Products */
+  .products { background: var(--paper); transition: background-color .45s ease; }
+  .products[data-group="flower"] { background: var(--rose-bg); }
+  .groups {
+    display: flex; justify-content: center; gap: 4px; margin: 0 auto 18px; padding: 5px;
+    width: fit-content; max-width: 100%; border-radius: 999px; background: var(--bg-deep);
+  }
+  .products[data-group="flower"] .groups { background: #f0dfd8; }
+  .groups button {
+    font: inherit; font-size: 1rem; font-weight: 500; padding: 10px 22px; border-radius: 999px;
+    border: 0; background: transparent; color: var(--ink-soft); cursor: pointer;
+  }
+  .groups button[aria-pressed="true"] { background: var(--paper); color: var(--ink); box-shadow: 0 2px 8px -3px rgba(60,45,25,.3); }
+  .filters { display: flex; justify-content: center; gap: 8px; margin-bottom: 36px; flex-wrap: wrap; min-height: 38px; }
+  .filters button {
+    font: inherit; font-size: .9rem; padding: 7px 16px; border-radius: 999px;
+    border: 1px solid var(--line); background: transparent; color: var(--ink-soft); cursor: pointer;
+  }
+  .filters button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .products[data-group="flower"] .filters button { border-color: var(--rose-line); }
+  .products[data-group="flower"] .filters button[aria-pressed="true"] { background: var(--rose-deep); border-color: var(--rose-deep); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 22px; }
+  .card { cursor: pointer; text-align: left; color: inherit; border-radius: 14px; }
+  .card:focus-visible { outline: 2px solid var(--olive); outline-offset: 4px; }
+  .card .thumb { position: relative; aspect-ratio: 1; border-radius: 14px; overflow: hidden; background: var(--bg); touch-action: pan-y; }
+  .card.is-flower .thumb { background: var(--rose-bg); }
+  .card .thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease, opacity .25s ease; }
+  .card:hover .thumb img { transform: scale(1.04); }
+  .card .count { position: absolute; right: 10px; top: 10px; font-size: .75rem; padding: 2px 9px; border-radius: 999px; background: rgba(43,38,32,.65); color: #fff; }
+
+  /* 카드·상세 창의 사진 넘기기 화살표 */
+  .slide-btn {
+    position: absolute; top: 50%; z-index: 2; transform: translateY(-50%);
+    width: 36px; height: 36px; border-radius: 50%; border: 0; cursor: pointer;
+    background: rgba(255,255,255,.92); color: var(--ink); font-size: 1.25rem; line-height: 1;
+    display: grid; place-items: center; box-shadow: 0 2px 10px rgba(0,0,0,.15);
+    transition: opacity .2s ease;
+  }
+  .slide-btn.prev { left: 8px; }
+  .slide-btn.next { right: 8px; }
+  .card .slide-btn { opacity: 0; }
+  .card:hover .slide-btn, .card:focus-within .slide-btn { opacity: 1; }
+  .dots { position: absolute; left: 0; right: 0; bottom: 10px; display: flex; justify-content: center; gap: 5px; pointer-events: none; }
+  .dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.55); box-shadow: 0 0 2px rgba(0,0,0,.3); }
+  .dots i.on { background: #fff; }
+  @media (hover: none) {
+    .card .slide-btn { opacity: 1; width: 30px; height: 30px; font-size: 1.05rem; }
+  }
+  .card .tag { display: inline-block; margin-top: 14px; font-size: .75rem; color: var(--olive); font-weight: 700; letter-spacing: .04em; }
+  .card.is-flower .tag { color: var(--rose-deep); }
+  .card h3 { font-family: var(--sans); font-size: 1.02rem; font-weight: 500; margin: 2px 0 2px; }
+  .card .price { color: var(--ink-soft); font-size: .95rem; }
+  .empty {
+    grid-column: 1 / -1; text-align: center; padding: 56px 24px; border-radius: var(--radius);
+    border: 1px dashed var(--line); color: var(--ink-soft);
+  }
+  .products[data-group="flower"] .empty { border-color: #e2c6bc; background: rgba(255,255,255,.45); }
+  .empty strong { display: block; font-family: var(--serif); font-size: 1.25rem; color: var(--ink); margin-bottom: 6px; }
+  .empty a { color: var(--rose-deep); font-weight: 500; }
+
+  /* Modal */
+  dialog {
+    width: min(920px, 100% - 32px); max-height: calc(100% - 32px); padding: 0; border: 0;
+    border-radius: var(--radius); background: var(--paper); color: var(--ink);
+  }
+  dialog::backdrop { background: rgba(30,25,20,.55); }
+  .modal { display: grid; grid-template-columns: 1.15fr 1fr; }
+  .gallery { background: var(--bg); padding: 16px; }
+  dialog.is-flower .gallery { background: var(--rose-bg); }
+  .gallery .main { position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden; background: var(--paper); }
+  .slide-btn[hidden] { display: none; }
+  .gallery .main img { width: 100%; height: 100%; object-fit: contain; }
+  .gallery .thumbs { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .gallery .thumbs button { width: 64px; height: 64px; padding: 0; border: 2px solid transparent; border-radius: 8px; overflow: hidden; cursor: pointer; background: none; }
+  .gallery .thumbs button[aria-current="true"] { border-color: var(--olive); }
+  .gallery .thumbs img { width: 100%; height: 100%; object-fit: cover; }
+  .info { padding: 36px 32px; display: flex; flex-direction: column; }
+  dialog.is-flower .info .eyebrow { color: var(--rose-deep); }
+  .info h3 { font-size: 1.6rem; margin: 4px 0 10px; }
+  .info .price { font-size: 1.2rem; font-weight: 700; margin-bottom: 18px; }
+  .info p { color: var(--ink-soft); margin: 0 0 24px; }
+  .info p.note { margin: -12px 0 24px; font-size: .82rem; color: #8a8073; }
+  .info .btns { margin-top: auto; }
+  .close { position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--paper); font-size: 1.4rem; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
+
+  .btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 13px 24px; border-radius: 999px; font-weight: 500; text-decoration: none;
+    border: 1px solid var(--olive); cursor: pointer; font: inherit; font-size: .95rem;
+  }
+  .btn.primary { background: var(--olive); color: #fff; }
+  .btn.primary:hover { background: var(--olive-deep); }
+
+  /* Steps */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; counter-reset: step; }
+  .step { padding: 30px 28px; border-radius: var(--radius); background: var(--paper); border: 1px solid var(--line); }
+  .step::before {
+    counter-increment: step; content: counter(step, decimal-leading-zero);
+    font-family: var(--serif); font-size: 1.9rem; color: var(--sun); display: block; margin-bottom: 8px;
+  }
+  .step h3 { font-size: 1.2rem; margin-bottom: 6px; }
+  .step p { margin: 0; color: var(--ink-soft); }
+
+  /* Contact */
+  .contact { background: var(--olive-deep); color: #f6f1e6; }
+  .contact .wrap { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; }
+  .contact h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 14px; }
+  .contact p { color: #dfe5d3; margin: 0 0 26px; }
+  .contact .btn.primary { background: #fee500; border-color: #fee500; color: #191600; }
+  .contact .btn.primary:hover { background: #f5da00; }
+  .qr { justify-self: center; background: #fff; padding: 18px; border-radius: var(--radius); text-align: center; color: var(--ink); }
+  .qr img { width: 200px; height: 200px; object-fit: contain; }
+  .qr span { display: block; margin-top: 8px; font-size: .88rem; color: var(--ink-soft); }
+
+  footer { padding: 36px 0 48px; font-size: .85rem; color: var(--ink-soft); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+  @media (max-width: 860px) {
+    .nav ul { display: none; }
+    .hero { padding: 40px 0 64px; }
+    .hero .wrap, .story .wrap, .contact .wrap { grid-template-columns: 1fr; gap: 40px; }
+    .hero-art { max-width: 480px; width: 100%; margin-inline: auto; }
+    .lines, .steps { grid-template-columns: 1fr; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 22px 14px; }
+    .modal { grid-template-columns: 1fr; }
+    .info { padding: 24px 22px 28px; }
+    section { padding: 64px 0; }
+  }
+  @media (max-width: 420px) {
+    .line-card { grid-template-rows: 200px auto; }
+    .verse { padding: 28px 22px; font-size: 1.1rem; }
+    .big-pick { padding: 18px 16px; }
+    .big-pick strong { font-size: 1.2rem; }
+    .groups button { padding: 9px 14px; font-size: .92rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap nav">
+    <a class="logo" href="#top" aria-label="엘림창작소 홈">
+      <!-- 엘림의 샘과 종려나무를 단순화한 마크 -->
+      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
+        <circle cx="17" cy="17" r="16" fill="#5f7448"/>
+        <path d="M17 25V12" stroke="#faf6ef" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M17 12c-3-3-7-3-9-1.5M17 12c3-3 7-3 9-1.5M17 12c-2-3.5-1.5-6 0-7.5M17 12c2-3.5 1.5-6 0-7.5" stroke="#faf6ef" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M9 26c2.5-1.6 5.5-1.6 8 0s5.5 1.6 8 0" stroke="#e9a23b" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span><b>엘림창작소</b><small>ELIM CREATIVE STUDIO</small></span>
+    </a>
+    <ul>
+      <li><a href="#story">브랜드 이야기</a></li>
+      <li><a href="#products" data-group-link="goods">커스텀 굿즈</a></li>
+      <li><a href="#products" data-group-link="flower">플라워</a></li>
+      <li><a href="#order">주문 안내</a></li>
+      <li><a href="#contact">문의</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">ELIM CREATIVE STUDIO</p>
+        <h1>손글씨와 꽃으로<br>마음을 전합니다</h1>
+        <p class="lead">한 글자씩 손으로 쓴 말씀 캘리그라피 굿즈, 사진 한 장으로 만드는 포토 굿즈, 그리고 오래도록 시들지 않는 실크플라워와 프리저브드 플라워. 엘림창작소는 곁에 두고 위로받는 선물을 만듭니다.</p>
+        <div class="big-picks">
+          <button type="button" class="big-pick" data-group-link="goods">
+            <strong>커스텀 굿즈</strong>
+            <span>포토 굿즈 · 캘리그라피·말씀</span>
+          </button>
+          <button type="button" class="big-pick flower" data-group-link="flower">
+            <strong>플라워</strong>
+            <span>실크 · 프리저브드 · 선물세트</span>
+          </button>
+        </div>
+      </div>
+      <div class="hero-art">
+        <figure class="a"><img src="images/church_keyring%20(1).jpg" alt="말씀 캘리그라피가 적힌 아크릴 키링 다섯 개"></figure>
+        <figure class="b"><img src="images/tumbler_15oz.jpg" alt="캘리그라피 문구가 적힌 흰색 텀블러 두 개"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="story" id="story">
+    <div class="wrap">
+      <blockquote class="verse">
+        그들이 엘림에 이르니 거기에 물샘 열둘과 종려나무 칠십 그루가 있는지라 거기서 그들이 물 곁에 장막을 치니라
+        <cite>출애굽기 15:27</cite>
+      </blockquote>
+      <div>
+        <p class="eyebrow">OUR STORY</p>
+        <h2>엘림, 광야에서 만난 쉼의 자리</h2>
+        <p>‘엘림’은 광야를 걷던 이스라엘 백성이 샘과 종려나무를 만나 쉬어 간 곳의 이름입니다. 지친 하루 끝에 문득 눈에 들어오는 말씀 한 줄, 늘 곁에 있는 우리 아이의 얼굴, 식탁 위의 꽃 한 송이가 누군가에게는 그런 엘림이 되기를 바랍니다.</p>
+        <p>그래서 엘림창작소의 물건은 빠르게 찍어 내기보다 천천히, 한 사람과 한 가정을 떠올리며 만듭니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">WHAT WE MAKE</p>
+        <h2>손글씨와 꽃, 두 가지로 만듭니다</h2>
+      </div>
+      <div class="lines">
+        <article class="line-card">
+          <img src="images/church_calendar.jpg.png" alt="말씀과 십자가 그림이 있는 2027년 패브릭 달력">
+          <div>
+            <h3>커스텀 굿즈</h3>
+            <p>손글씨 말씀을 담은 달력·키링·텀블러, 그리고 사진 한 장으로 만드는 포토 달력·인형쿠션·타일 액자. 교회 단체 선물로도 맞춤 제작합니다.</p>
+            <a href="#products" data-group-link="goods">커스텀 굿즈 보기 →</a>
+          </div>
+        </article>
+        <article class="line-card flower">
+          <!-- TODO: 플라워 사진이 생기면 아래 svg를 <img src="images/파일이름" alt="..."> 로 바꿔 주세요 -->
+          <svg viewBox="0 0 520 260" preserveAspectRatio="xMidYMid slice" role="img" aria-label="꽃 일러스트">
+            <rect width="520" height="260" fill="#f3e2db"/>
+            <g fill="none" stroke="#7d8b62" stroke-width="3" stroke-linecap="round">
+              <path d="M260 270 C255 210 250 170 230 120"/>
+              <path d="M260 270 C265 200 280 160 300 110"/>
+              <path d="M260 270 C262 220 262 190 262 150"/>
+              <path d="M200 270 C205 230 190 200 170 175"/>
+              <path d="M320 270 C318 235 335 205 355 185"/>
+            </g>
+            <g fill="#9aa77c">
+              <ellipse cx="244" cy="190" rx="18" ry="7" transform="rotate(-35 244 190)"/>
+              <ellipse cx="282" cy="185" rx="18" ry="7" transform="rotate(35 282 185)"/>
+              <ellipse cx="190" cy="220" rx="15" ry="6" transform="rotate(-25 190 220)"/>
+              <ellipse cx="333" cy="222" rx="15" ry="6" transform="rotate(30 333 222)"/>
+            </g>
+            <g>
+              <circle cx="230" cy="112" r="26" fill="#d99a8f"/><circle cx="230" cy="112" r="15" fill="#c47e73"/><circle cx="230" cy="112" r="6" fill="#a9625a"/>
+              <circle cx="302" cy="102" r="30" fill="#e7b9ad"/><circle cx="302" cy="102" r="18" fill="#d99a8f"/><circle cx="302" cy="102" r="7" fill="#c47e73"/>
+              <circle cx="262" cy="146" r="20" fill="#f2d3c9"/><circle cx="262" cy="146" r="9" fill="#e9a23b" opacity=".8"/>
+              <circle cx="170" cy="170" r="17" fill="#ecc7bc"/><circle cx="170" cy="170" r="7" fill="#d99a8f"/>
+              <circle cx="356" cy="180" r="19" fill="#d99a8f"/><circle cx="356" cy="180" r="8" fill="#b9736a"/>
+            </g>
+          </svg>
+          <div>
+            <h3>플라워</h3>
+            <p>오래 두고 볼 수 있는 실크플라워와 프리저브드 플라워, 그리고 꽃과 굿즈를 함께 담은 선물세트를 준비합니다.</p>
+            <a href="#products" data-group-link="flower">플라워 보기 →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="products" id="products" data-group="all">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">PRODUCTS</p>
+        <h2>엘림창작소의 상품</h2>
+        <p>상품을 누르면 사진을 크게 보고 구매 페이지로 이동할 수 있습니다.</p>
+      </div>
+      <div class="groups" role="group" aria-label="상품 갈래">
+        <button type="button" data-group="all" aria-pressed="true">전체</button>
+        <button type="button" data-group="goods" aria-pressed="false">커스텀 굿즈</button>
+        <button type="button" data-group="flower" aria-pressed="false">플라워</button>
+      </div>
+      <div class="filters" id="filters" role="group" aria-label="세부 분류"></div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section id="order">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">HOW TO ORDER</p>
+        <h2>맞춤 제작은 이렇게 진행돼요</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <h3>문의하기</h3>
+          <p>카카오톡으로 원하시는 상품과 수량을 알려 주세요. 포토 굿즈는 넣을 사진을, 꽃 상품은 원하시는 색감과 용도를 함께 알려 주시면 됩니다.</p>
+        </div>
+        <div class="step">
+          <h3>시안 확인</h3>
+          <p>말씀 문구와 디자인, 사진 보정 결과, 꽃 구성을 시안으로 보여 드리고 마음에 드실 때까지 함께 다듬습니다.</p>
+        </div>
+        <div class="step">
+          <h3>제작과 배송</h3>
+          <p>확정된 시안으로 정성껏 제작해 안전하게 포장해 보내 드립니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow" style="color:#e9c98a">CONTACT</p>
+        <h2>단체 주문과 맞춤 제작,<br>편하게 물어보세요</h2>
+        <p>교회 행사 기념품, 소그룹 선물, 감사의 꽃 선물, 우리 아이를 위한 하나뿐인 굿즈까지. 카카오톡으로 문의 주시면 친절하게 안내해 드립니다.</p>
+        <a class="btn primary" href="http://pf.kakao.com/_JmxbGn/chat" target="_blank" rel="noopener" id="kakao-link">카카오톡으로 문의하기</a>
+      </div>
+      <div class="qr">
+        <img src="images/kakao_qr.png.png" alt="카카오톡 문의 QR 코드">
+        <span>QR 코드를 찍으면 바로 연결돼요</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year"></span> 엘림창작소 Elim Creative Studio<br><small>일부 이미지는 연출 이미지입니다.</small></span>
+    <a href="#top">맨 위로 ↑</a>
+  </div>
+</footer>
+
+<dialog id="modal" aria-labelledby="m-title">
+  <button class="close" type="button" aria-label="닫기" data-close>×</button>
+  <div class="modal">
+    <div class="gallery">
+      <div class="main">
+        <img id="m-img" alt="">
+        <button type="button" class="slide-btn prev" data-step="-1" aria-label="이전 사진">‹</button>
+        <button type="button" class="slide-btn next" data-step="1" aria-label="다음 사진">›</button>
+      </div>
+      <div class="thumbs" id="m-thumbs"></div>
+    </div>
+    <div class="info">
+      <span class="eyebrow" id="m-tag" style="margin:0"></span>
+      <h3 id="m-title"></h3>
+      <div class="price" id="m-price"></div>
+      <p id="m-desc"></p>
+      <p class="note" id="m-note" hidden></p>
+      <div class="btns" id="m-btns"></div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+const STORE = "https://smartstore.naver.com/elimcallinflower"; // 상품별 링크를 받기 전까지 쓰는 기본 구매 링크
+const KAKAO = "http://pf.kakao.com/_JmxbGn/chat";
+
+/*
+  ▼ 상품 추가하는 방법
+    1. 사진 파일을 images 폴더에 넣습니다.
+    2. 아래 목록에서 { ... }, 한 덩어리를 복사해 붙여 넣고 내용을 바꿉니다. (덩어리 사이에 쉼표 , 필수)
+       category : "포토 굿즈" / "캘리그라피·말씀" / "플라워" 중 하나
+                  (플라워는 "플라워 > 실크플라워", "플라워 > 프리저브드 플라워", "플라워 > 꽃+굿즈 선물세트" 처럼 세부 분류를 붙일 수 있어요)
+       name     : 상품명
+       price    : 가격. 예) "15,000원". 비워 두면 "문의"로 표시
+       link     : 구매 링크. 상품별 링크가 없으면 STORE (스마트스토어 첫 화면)
+       desc     : 상품을 눌렀을 때 나오는 짧은 설명
+       note     : (선택) 설명 아래 작은 글씨 안내. 예) "일부 이미지는 연출 이미지입니다."
+       images   : images 폴더 안의 파일 이름. 첫 번째가 대표 사진. 사진이 없으면 [] (사진 준비 중으로 표시)
+    3. 저장한 뒤 브라우저에서 새로고침하면 바로 반영됩니다.
+*/
+const PRODUCTS = [
+  /* ───── 포토 굿즈 ───── */
+  {
+    category: "포토 굿즈", name: "2027 패브릭 달력", price: "22,000원", link: STORE,
+    desc: "가족사진이나 우리 아이 사진을 넣어 만드는 패브릭 벽걸이 달력입니다.",
+    images: ["calendar (1).png", "calendar (2).png"]
+  },
+  {
+    category: "포토 굿즈", name: "타일 3구 포토 액자", price: "23,900원", link: STORE,
+    desc: "사진을 그림처럼 담은 타일 3장과 액자 세트입니다. 컬러와 연필 스케치 스타일 중에서 고를 수 있어요.",
+    images: ["tile3 (1).jpg", "tile3 (1).png", "tile3 (2).png", "tile3 (3).png"]
+  },
+  {
+    category: "포토 굿즈", name: "포토 머그 텀블러", price: "24,900원", link: STORE,
+    desc: "소중한 사진을 담아 만드는 머그 텀블러입니다.",
+    note: "일부 이미지는 연출 이미지입니다.",
+    images: ["photo_mug.jpg", "photo_mug_2.jpg", "photo_mug_3.jpg", "photo_mug_4.jpg"]
+  },
+  {
+    category: "포토 굿즈", name: "반려동물 인형쿠션", price: "31,000원~", link: STORE,
+    desc: "사진 속 우리 아이 모양 그대로 만든 인형쿠션입니다. 30cm, 50cm 크기로 만들 수 있어요.",
+    images: ["animal50cm cushion.jpg.png", "30cmanimal cushion.jpg.png"]
+  },
+  {
+    category: "포토 굿즈", name: "인형쿠션 키링 10cm", price: "15,900원", link: STORE,
+    desc: "사진 속 모습 그대로 만든 인형쿠션을 손바닥만 한 10cm 키링으로 만들었습니다.",
+    note: "일부 이미지는 연출 이미지입니다.",
+    images: ["keyring_10cm.jpg", "keyring_10cm_2.jpg", "keyring_10cm_3.jpg", "keyring_10cm_4.jpg", "keyring_10cm_5.jpg"]
+  },
+
+  /* ───── 캘리그라피·말씀 ───── */
+  {
+    category: "캘리그라피·말씀", name: "2027 교회 말씀 달력", price: "25,000원", link: STORE,
+    desc: "말씀과 수채화 그림을 담은 패브릭 벽걸이 달력입니다. 교회 이름과 표어를 넣어 단체 제작할 수 있습니다.",
+    images: ["church_calendar.jpg.png"]
+  },
+  {
+    category: "캘리그라피·말씀", name: "말씀 캘리그라피 텀블러", price: "24,900원", link: STORE,
+    desc: "\"각각 은사를 받은 대로\"(베드로전서 4:10) 말씀을 손글씨로 새긴 22oz 손잡이 텀블러입니다. 교회·소그룹 단체 주문도 가능합니다.",
+    images: ["tumbler_verse.jpg", "tumbler_verse_2.jpg", "tumbler_verse_3.jpg"]
+  },
+  {
+    category: "캘리그라피·말씀", name: "15oz 캘리 텀블러", price: "22,000원", link: STORE,
+    desc: "손글씨 캘리그라피를 담은 15oz 텀블러입니다.",
+    images: ["tumbler_15oz.jpg", "tumbler_15oz_2.jpg", "tumbler_15oz_3.jpg"]
+  },
+  {
+    category: "캘리그라피·말씀", name: "아크릴 키링 젤펜 세트", price: "14,800원", link: STORE,
+    desc: "손글씨 말씀을 담은 아크릴 키링 세트입니다. 가방이나 열쇠에 달고 다니며 매일 말씀을 만나 보세요.",
+    images: ["church_keyring (1).jpg", "church_keyring (2).jpg"]
+  },
+
+  /* ───── 플라워 ───── (사진을 넣은 뒤 여기에 추가해 주세요) */
+];
+
+/* 분류 버튼 — 커스텀 굿즈 / 플라워 아래에 이 순서대로 세부 버튼이 만들어집니다 */
+const GROUPS = {
+  goods:  { label: "커스텀 굿즈", subs: ["포토 굿즈", "캘리그라피·말씀"] },
+  flower: { label: "플라워",     subs: ["실크플라워", "프리저브드 플라워", "꽃+굿즈 선물세트"] }
+};
+
+const parseCat = c => {
+  const [g, s = ""] = String(c).split(">").map(t => t.trim());
+  if (g === "플라워") return { group: "flower", sub: s };
+  if (!GROUPS.goods.subs.includes(g)) console.warn(`알 수 없는 분류: "${c}"`);
+  return { group: "goods", sub: g };
+};
+PRODUCTS.forEach(p => Object.assign(p, parseCat(p.category)));
+
+const src = f => "images/" + encodeURIComponent(f);
+const priceText = p => p ? p : "문의";
+// 사진이 아직 없는 상품에 쓰는 자리 표시 그림
+const NO_PHOTO = "data:image/svg+xml," + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><rect width="400" height="400" fill="#f1eadd"/>' +
+  '<text x="200" y="208" text-anchor="middle" font-family="sans-serif" font-size="22" fill="#8a8073">사진 준비 중</text></svg>');
+const firstImg = p => p.images.length ? src(p.images[0]) : NO_PHOTO;
+// images 폴더에 파일이 없거나 이름이 틀리면 깨진 그림 대신 "사진 준비 중"을 보여 줍니다
+document.addEventListener("error", e => {
+  const img = e.target;
+  if (img.tagName === "IMG" && img.src !== NO_PHOTO) {
+    console.warn("사진 파일을 찾을 수 없습니다:", decodeURIComponent(img.getAttribute("src")));
+    img.src = NO_PHOTO;
+  }
+}, true);
+
+const section = document.getElementById("products");
+const grid = document.getElementById("grid");
+const filters = document.getElementById("filters");
+const state = { group: "all", sub: "all" };
+
+function renderFilters() {
+  filters.innerHTML = "";
+  if (state.group === "all") return;
+  ["all", ...GROUPS[state.group].subs].forEach(s => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = s === "all" ? "전체" : s;
+    b.setAttribute("aria-pressed", s === state.sub);
+    b.addEventListener("click", () => { state.sub = s; renderFilters(); renderGrid(); });
+    filters.appendChild(b);
+  });
+}
+
+function renderGrid() {
+  grid.innerHTML = "";
+  const list = PRODUCTS.filter(p =>
+    (state.group === "all" || p.group === state.group) &&
+    (state.sub === "all" || p.sub === state.sub));
+
+  if (!list.length) {
+    const box = document.createElement("div");
+    box.className = "empty";
+    const what = state.sub !== "all" ? state.sub : GROUPS[state.group]?.label || "상품";
+    box.innerHTML = `<strong></strong>지금 준비하고 있어요. 먼저 궁금하신 점은 <a href="${KAKAO}" target="_blank" rel="noopener">카카오톡으로 문의</a>해 주세요.`;
+    box.querySelector("strong").textContent = `${what} 상품을 곧 소개해 드릴게요`;
+    grid.appendChild(box);
+    return;
+  }
+
+  list.forEach(p => grid.appendChild(makeCard(p)));
+}
+
+/* 상품 카드 — 사진이 여러 장이면 화살표(마우스 올리면 보임)나 손가락으로 밀어서 넘기고,
+   카드를 누르면 보고 있던 사진부터 크게 열립니다 */
+function makeCard(p) {
+  const n = p.images.length;
+  const card = document.createElement("article");
+  card.className = "card" + (p.group === "flower" ? " is-flower" : "");
+  card.tabIndex = 0;
+  card.setAttribute("aria-label", `${p.name} 자세히 보기`);
+  card.innerHTML = `
+    <div class="thumb">
+      <img loading="lazy" src="${firstImg(p)}" alt="">
+      ${n > 1 ? `
+        <button type="button" class="slide-btn prev" aria-label="이전 사진">‹</button>
+        <button type="button" class="slide-btn next" aria-label="다음 사진">›</button>
+        <span class="count">1 / ${n}</span>
+        <div class="dots">${"<i></i>".repeat(n)}</div>` : ""}
+    </div>
+    <span class="tag"></span>
+    <h3></h3>
+    <div class="price"></div>`;
+  card.querySelector(".tag").textContent = p.sub || GROUPS[p.group].label;
+  card.querySelector("h3").textContent = p.name;
+  card.querySelector(".price").textContent = priceText(p.price);
+  const img = card.querySelector("img");
+  img.alt = p.name;
+
+  let idx = 0;
+  const go = k => {
+    idx = (k + n) % n;
+    img.src = src(p.images[idx]);
+    card.querySelector(".count").textContent = `${idx + 1} / ${n}`;
+    card.querySelectorAll(".dots i").forEach((d, j) => d.classList.toggle("on", j === idx));
+  };
+
+  if (n > 1) {
+    go(0);
+    card.querySelector(".prev").addEventListener("click", e => { e.stopPropagation(); go(idx - 1); });
+    card.querySelector(".next").addEventListener("click", e => { e.stopPropagation(); go(idx + 1); });
+    // 마우스를 올리면 다음 사진들을 미리 불러와 넘길 때 바로 보이게 합니다
+    card.addEventListener("mouseenter", () => p.images.forEach(f => { new Image().src = src(f); }), { once: true });
+    // 휴대폰: 사진을 좌우로 밀어서 넘기기
+    let x0 = null, swiped = false;
+    const thumb = card.querySelector(".thumb");
+    thumb.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; swiped = false; }, { passive: true });
+    thumb.addEventListener("touchend", e => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 40) { swiped = true; go(idx + (dx < 0 ? 1 : -1)); }
+      x0 = null;
+    });
+    card.addEventListener("click", e => { if (swiped) { e.stopImmediatePropagation(); swiped = false; } }, true);
+  }
+
+  card.addEventListener("click", () => openModal(p, idx));
+  card.addEventListener("keydown", e => {
+    if (e.target !== card) return;
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openModal(p, idx); }
+    if (n > 1 && e.key === "ArrowRight") go(idx + 1);
+    if (n > 1 && e.key === "ArrowLeft") go(idx - 1);
+  });
+  return card;
+}
+
+function setGroup(g) {
+  state.group = g;
+  state.sub = "all";
+  section.dataset.group = g;
+  document.querySelectorAll(".groups [data-group]").forEach(b => b.setAttribute("aria-pressed", b.dataset.group === g));
+  renderFilters();
+  renderGrid();
+}
+
+document.querySelectorAll(".groups [data-group]").forEach(b => {
+  b.addEventListener("click", () => setGroup(b.dataset.group));
+});
+document.querySelectorAll("[data-group-link]").forEach(el => {
+  el.addEventListener("click", e => {
+    setGroup(el.dataset.groupLink);
+    if (el.tagName === "BUTTON") section.scrollIntoView({ behavior: "smooth" });
+  });
+});
+
+const modal = document.getElementById("modal");
+let modalStep = null; // 상세 창에서 ← → 키로 사진 넘기기
+function openModal(p, start = 0) {
+  const mImg = document.getElementById("m-img");
+  const thumbs = document.getElementById("m-thumbs");
+  const n = p.images.length;
+  let cur = 0;
+  const show = k => {
+    cur = n ? (k + n) % n : 0;
+    mImg.src = n ? src(p.images[cur]) : NO_PHOTO;
+    mImg.alt = p.name;
+    thumbs.querySelectorAll("button").forEach((t, j) => t.setAttribute("aria-current", j === cur));
+  };
+  modalStep = n > 1 ? d => show(cur + d) : null;
+  document.querySelectorAll("#modal .slide-btn").forEach(b => { b.hidden = n < 2; });
+  thumbs.innerHTML = "";
+  if (p.images.length > 1) {
+    p.images.forEach((f, k) => {
+      const t = document.createElement("button");
+      t.type = "button";
+      t.setAttribute("aria-label", `사진 ${k + 1}`);
+      t.innerHTML = `<img src="${src(f)}" alt="">`;
+      t.addEventListener("click", () => show(k));
+      thumbs.appendChild(t);
+    });
+  }
+  show(start);
+  modal.classList.toggle("is-flower", p.group === "flower");
+  document.getElementById("m-tag").textContent = p.sub || GROUPS[p.group].label;
+  document.getElementById("m-title").textContent = p.name;
+  document.getElementById("m-price").textContent = priceText(p.price);
+  document.getElementById("m-desc").textContent = p.desc || "";
+  const note = document.getElementById("m-note");
+  note.textContent = p.note || "";
+  note.hidden = !p.note;
+  const btns = document.getElementById("m-btns");
+  btns.innerHTML = "";
+  const a = document.createElement("a");
+  a.className = "btn primary";
+  a.href = p.link || KAKAO;
+  a.target = "_blank";
+  a.rel = "noopener";
+  a.textContent = p.link ? "구매하러 가기" : "카카오톡으로 문의하기";
+  btns.appendChild(a);
+  modal.showModal();
+}
+modal.addEventListener("click", e => {
+  if (e.target === modal || e.target.hasAttribute("data-close")) modal.close();
+  if (e.target.dataset.step && modalStep) modalStep(Number(e.target.dataset.step));
+});
+modal.addEventListener("keydown", e => {
+  if (!modalStep) return;
+  if (e.key === "ArrowRight") modalStep(1);
+  if (e.key === "ArrowLeft") modalStep(-1);
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+// 주소 끝에 ?g=flower 또는 ?g=goods 를 붙이면 그 갈래가 선택된 채로 열립니다
+const startGroup = new URLSearchParams(location.search).get("g");
+setGroup(GROUPS[startGroup] ? startGroup : "all");
+</script>
+</body>
+</html>
