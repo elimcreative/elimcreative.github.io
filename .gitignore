@@ -1,3 +1,6 @@
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# 인스타·카톡 프로필용 (홈페이지에서 쓰지 않음)
+images/profile_round.png
