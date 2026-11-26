@@ -136,7 +136,8 @@
   .line-card.flower a { color: var(--rose-deep); }
 
   /* Products */
-  .products { background: var(--paper); transition: background-color .45s ease; }
+  /* scroll-margin-top: 버튼으로 이동했을 때 섹션 제목이 고정 헤더 밑에 가려지지 않게 */
+  .products { background: var(--paper); transition: background-color .45s ease; scroll-margin-top: 66px; }
   .products[data-group="flower"] { background: var(--rose-bg); }
   .groups {
     display: flex; justify-content: center; gap: 4px; margin: 0 auto 18px; padding: 5px;
@@ -148,7 +149,8 @@
     border: 0; background: transparent; color: var(--ink-soft); cursor: pointer;
   }
   .groups button[aria-pressed="true"] { background: var(--paper); color: var(--ink); box-shadow: 0 2px 8px -3px rgba(60,45,25,.3); }
-  .filters { display: flex; justify-content: center; gap: 8px; margin-bottom: 36px; flex-wrap: wrap; min-height: 38px; }
+  .filters { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  .filters:empty { display: none; } /* 세부 분류 버튼이 없으면 자리도 차지하지 않음 */
   .filters button {
     font: inherit; font-size: .9rem; padding: 7px 16px; border-radius: 999px;
     border: 1px solid var(--line); background: transparent; color: var(--ink-soft); cursor: pointer;
@@ -156,8 +158,10 @@
   .filters button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
   .products[data-group="flower"] .filters button { border-color: var(--rose-line); }
   .products[data-group="flower"] .filters button[aria-pressed="true"] { background: var(--rose-deep); border-color: var(--rose-deep); }
-  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 22px; }
-  .card { cursor: pointer; text-align: left; color: inherit; border-radius: 14px; }
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 22px; margin-top: 32px; }
+  /* 카드는 세로 정렬: 같은 줄 카드끼리 높이를 맞추고, 가격/문의 버튼은 항상 맨 아래 */
+  .card { cursor: pointer; text-align: left; color: inherit; border-radius: 14px; display: flex; flex-direction: column; }
+  .card .thumb { flex: none; }
   .card:focus-visible { outline: 2px solid var(--olive); outline-offset: 4px; }
   .card .thumb { position: relative; aspect-ratio: 1; border-radius: 14px; overflow: hidden; background: var(--bg); touch-action: pan-y; }
   /* 플라워 상품 카드: 아주 연한 로즈베이지 배경 */
@@ -188,8 +192,19 @@
   }
   .card .tag { display: inline-block; margin-top: 14px; font-size: .75rem; color: var(--olive); font-weight: 700; letter-spacing: .04em; }
   .card.is-flower .tag { color: var(--rose-deep); }
-  .card h3 { font-family: var(--sans); font-size: 1.02rem; font-weight: 500; margin: 2px 0 2px; }
-  .card .price { color: var(--ink-soft); font-size: .95rem; }
+  .card h3 {
+    font-family: var(--sans); font-size: 1.02rem; font-weight: 500; margin: 2px 0 2px; line-height: 1.45;
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; /* 상품 이름 최대 2줄 */
+  }
+  .card .price { color: var(--ink-soft); font-size: .95rem; margin-top: auto; }
+  /* 가격이 "문의"인 상품: 카카오톡 문의 버튼 */
+  .price-cta {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin-top: 6px;
+    padding: 8px 14px; border-radius: 999px; background: #fee500; color: #191600;
+    font-size: .85rem; font-weight: 700; text-decoration: none; line-height: 1.2; white-space: nowrap;
+  }
+  .price-cta:hover { background: #f5da00; }
+  .price-cta svg { flex: none; }
   .empty {
     grid-column: 1 / -1; text-align: center; padding: 56px 24px; border-radius: var(--radius);
     border: 1px dashed var(--line); color: var(--ink-soft);
@@ -264,10 +279,18 @@
     .hero .wrap, .story .wrap, .contact .wrap { grid-template-columns: 1fr; gap: 40px; }
     .hero-art { max-width: 480px; width: 100%; margin-inline: auto; }
     .lines, .steps { grid-template-columns: 1fr; }
-    .grid { grid-template-columns: repeat(2, 1fr); gap: 22px 14px; }
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 14px; margin-top: 18px; }
     .modal { grid-template-columns: 1fr; }
     .info { padding: 24px 22px 28px; }
     section { padding: 64px 0; }
+    /* 휴대폰: 상품 섹션 위쪽 여백을 줄여 제목과 첫 상품이 바로 보이게 */
+    .products { padding-top: 28px; }
+    .products .section-head { margin-bottom: 16px; }
+    .products .section-head p { display: none; } /* 휴대폰에서는 PRODUCTS 표시와 안내 문구를 숨기고 제목만 */
+    .groups { margin-bottom: 10px; }
+    /* 휴대폰: 상품 이름은 항상 2줄 높이로 잡아서 카드 높이·가격 위치를 맞춤 */
+    .card h3 { min-height: calc(1.45em * 2); }
+    .price-cta { display: flex; width: 100%; padding: 9px 6px; font-size: .8rem; gap: 4px; }
   }
   @media (max-width: 420px) {
     .line-card { grid-template-rows: 200px auto; }
@@ -390,7 +413,7 @@
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">PRODUCTS</p>
-        <h2>엘림창작소의 상품</h2>
+        <h2 id="products-title">엘림창작소의 상품</h2>
         <p>상품을 누르면 사진을 크게 보고 구매 페이지로 이동할 수 있습니다.</p>
       </div>
       <div class="groups" role="group" aria-label="상품 갈래">
@@ -669,7 +692,21 @@ function makeCard(p) {
     <div class="price"></div>`;
   card.querySelector(".tag").textContent = p.sub || GROUPS[p.group].label;
   card.querySelector("h3").textContent = p.name;
-  card.querySelector(".price").textContent = priceText(p.price);
+  const priceEl = card.querySelector(".price");
+  if (p.price) {
+    priceEl.textContent = p.price;
+  } else {
+    // 가격이 "문의"인 상품은 회색 글자 대신 눈에 띄는 카카오톡 문의 버튼
+    const cta = document.createElement("a");
+    cta.className = "price-cta";
+    cta.href = KAKAO;
+    cta.target = "_blank";
+    cta.rel = "noopener";
+    cta.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.5 3 2 6.6 2 11c0 2.8 1.9 5.3 4.7 6.7l-1 3.6c-.1.3.3.6.6.4l4.2-2.8c.5.1 1 .1 1.5.1 5.5 0 10-3.6 10-8S17.5 3 12 3z"/></svg>카톡으로 문의하기';
+    cta.setAttribute("aria-label", `${p.name} 카카오톡으로 문의하기 (새 창)`);
+    cta.addEventListener("click", e => e.stopPropagation()); // 카드 상세 창은 열지 않고 카톡으로 바로 이동
+    priceEl.appendChild(cta);
+  }
   const img = card.querySelector("img");
   img.alt = p.name;
 
@@ -714,6 +751,9 @@ function setGroup(g) {
   state.group = g;
   state.sub = "all";
   section.dataset.group = g;
+  // 섹션 제목을 지금 보고 있는 분류 이름으로 바꿔서 어디를 보고 있는지 바로 알 수 있게
+  document.getElementById("products-title").textContent =
+    g === "all" ? "엘림창작소의 상품" : GROUPS[g].label;
   document.querySelectorAll(".groups [data-group]").forEach(b => b.setAttribute("aria-pressed", b.dataset.group === g));
   renderFilters();
   renderGrid();
