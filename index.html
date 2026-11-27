@@ -240,6 +240,7 @@
   /* "구매하기" 아래 작은 카톡 문의 링크 */
   .info .sub-link { font-size: .85rem; color: var(--ink-soft); text-decoration: underline; text-underline-offset: 3px; padding: 2px 4px; }
   .info .sub-link:hover { color: var(--ink); }
+  .info .seller { font-size: .78rem; color: #8a8073; margin: -4px 0 0 6px; }
   .close { position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--paper); font-size: 1.4rem; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
 
   .btns { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -504,6 +505,11 @@
 <script>
 const STORE = "https://smartstore.naver.com/elimcallinflower"; // 상품별 링크를 받기 전까지 쓰는 기본 구매 링크
 const KAKAO = "http://pf.kakao.com/_JmxbGn/chat";
+// 스마트스토어 상품 주소: P("상품번호") → https://smartstore.naver.com/elimcallinflower/products/상품번호
+const P = no => `${STORE}/products/${no}`;
+// 쿠팡·아이디어스 주소면 "구매하기" 버튼 아래에 판매처 이름을 작게 표시합니다
+const SELLERS = [["coupang.com", "쿠팡"], ["idus.com", "아이디어스"]];
+const sellerOf = url => { try { const h = new URL(url).hostname; return (SELLERS.find(([d]) => h === d || h.endsWith("." + d)) || [])[1] || ""; } catch { return ""; } };
 
 /*
   ▼ 상품 추가하는 방법
@@ -513,7 +519,8 @@ const KAKAO = "http://pf.kakao.com/_JmxbGn/chat";
                   (플라워는 "플라워 > 실크플라워", "플라워 > 프리저브드 플라워", "플라워 > 꽃+굿즈 선물세트" 처럼 세부 분류를 붙일 수 있어요)
        name     : 상품명
        price    : 가격. 예) "15,000원". 비워 두면 "카톡으로 문의하기" 버튼, "31,000원~"처럼 ~를 붙이면 아래에 "크기·구성에 따라 달라져요"
-       link     : 구매 링크. 상품별 링크가 없으면 STORE (스마트스토어 첫 화면)
+       link     : 구매 링크. 스마트스토어 상품이면 P("상품번호"), 다른 곳은 주소를 "https://..." 그대로
+                  (쿠팡·아이디어스 주소면 버튼 아래에 판매처 이름이 작게 나옵니다). 상품별 링크가 없으면 STORE (스토어 첫 화면)
        desc     : 상품을 눌렀을 때 나오는 짧은 설명
        note     : (선택) 설명 아래 작은 글씨 안내. 예) "일부 이미지는 연출 이미지입니다."
        images   : images 폴더 안의 파일 이름. 첫 번째가 대표 사진. 사진이 없으면 [] (사진 준비 중으로 표시)
@@ -522,34 +529,34 @@ const KAKAO = "http://pf.kakao.com/_JmxbGn/chat";
 const PRODUCTS = [
   /* ───── 포토 굿즈 ───── */
   {
-    category: "포토 굿즈", name: "2027 패브릭 달력", price: "22,000원", link: STORE,
+    category: "포토 굿즈", name: "2027 패브릭 달력", price: "22,000원", link: P("13806288893"),
     desc: "가족사진이나 우리 아이 사진을 넣어 만드는 패브릭 벽걸이 달력입니다.",
     images: ["calendar.png", "calendar_2.png"]
   },
   {
-    category: "포토 굿즈", name: "타일 3구 포토 액자", price: "23,900원", link: STORE,
+    category: "포토 굿즈", name: "타일 3구 포토 액자", price: "23,900원", link: P("13893213967"),
     desc: "사진을 그림처럼 담은 타일 3장과 액자 세트입니다. 컬러와 연필 스케치 스타일 중에서 고를 수 있어요.",
     images: ["tile3.jpg", "tile3_2.png", "tile3_3.png", "tile3_4.png"]
   },
   {
-    category: "포토 굿즈", name: "포토 머그 텀블러", price: "24,900원", link: STORE,
+    category: "포토 굿즈", name: "포토 머그 텀블러", price: "24,900원", link: P("13892013256"),
     desc: "소중한 사진을 담아 만드는 머그 텀블러입니다.",
     note: "일부 이미지는 연출 이미지입니다.",
     images: ["photo_mug.jpg", "photo_mug_2.jpg", "photo_mug_3.jpg", "photo_mug_4.jpg"]
   },
   {
-    category: "포토 굿즈", name: "반려동물 인형쿠션", price: "31,000원~", link: STORE,
+    category: "포토 굿즈", name: "반려동물 인형쿠션", price: "31,000원~", link: P("13679962748"),
     desc: "사진 속 우리 아이 모양 그대로 만든 인형쿠션입니다. 30cm, 50cm 크기로 만들 수 있어요.",
     images: ["pet_cushion.png", "pet_cushion_2.png"]
   },
   {
-    category: "포토 굿즈", name: "인형쿠션 키링 10cm (반려동물·아기)", price: "15,900원", link: STORE,
+    category: "포토 굿즈", name: "인형쿠션 키링 10cm (반려동물·아기)", price: "15,900원", link: P("13825184089"),
     desc: "사진 속 모습 그대로 만든 인형쿠션을 손바닥만 한 10cm 키링으로 만들었습니다. 반려동물뿐 아니라 아기 얼굴로도 만들 수 있어요.",
     note: "일부 이미지는 연출 이미지입니다.",
     images: ["keyring_10cm.jpg", "keyring_10cm_2.jpg", "keyring_10cm_3.jpg", "keyring_10cm_4.jpg", "keyring_10cm_5.jpg", "keyring_baby.jpg", "keyring_baby_2.jpg"]
   },
   {
-    category: "포토 굿즈", name: "반려동물 초상화 머그", price: "10,900원", link: STORE,
+    category: "포토 굿즈", name: "반려동물 초상화 머그", price: "10,900원", link: P("13836374061"),
     desc: "반려동물 사진을 연필·수채화·포토 스타일로 담은 세라믹 머그. 이름도 함께 넣어 드려요",
     images: ["pet_mug.jpg", "pet_mug_2.jpg", "pet_mug_3.jpg"]
   },
@@ -559,34 +566,34 @@ const PRODUCTS = [
     images: ["fabric_poster.jpg", "fabric_poster_2.jpg"]
   },
   {
-    category: "포토 굿즈", name: "22oz 스텐 포토 텀블러", price: "24,900원", link: STORE,
+    category: "포토 굿즈", name: "22oz 스텐 포토 텀블러", price: "24,900원", link: P("13892013256"),
     desc: "웨딩·커플·가족 사진이나 일러스트를 담은 22oz 손잡이 보온보냉 텀블러. 이름·날짜 각인 가능",
     images: ["tumbler22.jpg", "tumbler22_2.jpg"]
   },
   {
-    category: "포토 굿즈", name: "이름 양치컵", price: "9,900원", link: STORE,
+    category: "포토 굿즈", name: "이름 양치컵", price: "9,900원", link: P("13639990079"),
     desc: "아이 얼굴과 이름을 넣은 스텐 양치컵. 교회 아기학교·어린이집·유치원 단체 선물로 많이 찾으세요. 개별 이름 포장 가능",
     images: ["cup.jpg", "cup_2.jpg"]
   },
 
   /* ───── 캘리그라피·말씀 ───── */
   {
-    category: "캘리그라피·말씀", name: "2027 교회 말씀 달력", price: "25,000원", link: STORE,
+    category: "캘리그라피·말씀", name: "2027 교회 말씀 달력", price: "25,000원", link: P("13806358766"),
     desc: "말씀과 수채화 그림을 담은 패브릭 벽걸이 달력입니다. 교회 이름과 표어를 넣어 단체 제작할 수 있습니다.",
     images: ["church_calendar.png"]
   },
   {
-    category: "캘리그라피·말씀", name: "말씀 캘리그라피 텀블러", price: "24,900원", link: STORE,
+    category: "캘리그라피·말씀", name: "말씀 캘리그라피 텀블러", price: "24,900원", link: P("13655720819"),
     desc: "\"각각 은사를 받은 대로\"(베드로전서 4:10) 말씀을 손글씨로 새긴 22oz 손잡이 텀블러입니다. 교회·소그룹 단체 주문도 가능합니다.",
     images: ["tumbler_verse.jpg", "tumbler_verse_2.jpg", "tumbler_verse_3.jpg"]
   },
   {
-    category: "캘리그라피·말씀", name: "15oz 캘리 텀블러", price: "22,000원", link: STORE,
+    category: "캘리그라피·말씀", name: "15oz 캘리 텀블러", price: "22,000원", link: P("13891732959"),
     desc: "손글씨 캘리그라피를 담은 15oz 텀블러입니다.",
     images: ["tumbler_15oz.jpg", "tumbler_15oz_2.jpg", "tumbler_15oz_3.jpg"]
   },
   {
-    category: "캘리그라피·말씀", name: "말씀 아크릴 키링 + 젤펜 세트", price: "14,800원", link: STORE,
+    category: "캘리그라피·말씀", name: "말씀 아크릴 키링 + 젤펜 세트", price: "14,800원", link: P("13764042231"),
     desc: "손글씨 말씀을 담은 아크릴 키링과 같은 말씀 파츠를 단 젤펜 세트예요. 펜 색상 블랙·화이트 선택, 원하는 말씀으로 주문 제작",
     images: ["church_keyring.jpg", "church_keyring_2.jpg", "pen_black.jpg", "pen_white.jpg"]
   },
@@ -598,32 +605,32 @@ const PRODUCTS = [
     images: ["flower_bag.jpg"]
   },
   {
-    category: "플라워", name: "달항아리 플라워", price: "35,000원", link: STORE,
+    category: "플라워", name: "달항아리 플라워", price: "35,000원", link: P("13292469690"),
     desc: "고운 달항아리에 실크플라워를 담은 감사·축하 선물",
     images: ["moon_jar.jpg"]
   },
   {
-    category: "플라워", name: "꽃 용돈박스", price: "29,000원", link: STORE,
+    category: "플라워", name: "꽃 용돈박스", price: "29,000원", link: P("13292350322"),
     desc: "꽃과 용돈 봉투를 함께 담는 어버이날·생신 선물 박스",
     images: ["money_box.jpg", "money_box_2.jpg"]
   },
   {
-    category: "플라워", name: "캘리그라피 플라워 액자", price: "32,000원", link: STORE,
+    category: "플라워", name: "캘리그라피 플라워 액자", price: "32,000원", link: P("13267977627"),
     desc: "손글씨 캘리그라피와 프리저브드 플라워로 만든 액자. 원하는 문구로 주문 제작",
     images: ["calli_frame.jpg"]
   },
   {
-    category: "플라워", name: "프리저브드 플라워 바구니", price: "29,900원", link: STORE,
+    category: "플라워", name: "프리저브드 플라워 바구니", price: "29,900원", link: P("13526500236"),
     desc: "시들지 않는 프리저브드 플라워와 손글씨 메시지를 담은 원목 바구니",
     images: ["preserved_basket.jpg"]
   },
   {
-    category: "플라워", name: "프리저브드 플라워 시계", price: "39,000원", link: STORE,
+    category: "플라워", name: "프리저브드 플라워 시계", price: "39,000원", link: P("13181098686"),
     desc: "유리 돔 안에 프리저브드 플라워를 담은 탁상시계",
     images: ["flower_clock.jpg"]
   },
   {
-    category: "플라워", name: "실크플라워 호접란 화분", price: "69,000원", link: STORE,
+    category: "플라워", name: "실크플라워 호접란 화분", price: "69,000원", link: P("13131948807"),
     desc: "손글씨 메시지 카드를 꽂은 호접란 화분. 개업·승진 축하 선물",
     images: ["orchid.jpg"]
   },
@@ -638,7 +645,7 @@ const PRODUCTS = [
     images: ["wedding_frame.jpg"]
   },
   {
-    category: "플라워", name: "하트 인형봉", price: "15,000원", link: STORE,
+    category: "플라워", name: "하트 인형봉", price: "15,000원", link: P("13041210914"),
     desc: "하트 캡슐 안에 인형을 담은 졸업·공연 선물",
     images: ["heart_wand.jpg"]
   },
@@ -874,6 +881,14 @@ function openModal(p, start = 0) {
   // 구매 링크가 있으면 "구매하기"(스토어) + 아래에 작은 "카톡 문의" 링크, 없으면 카카오톡 버튼
   a.textContent = p.link ? "구매하기" : (p.price ? "카톡으로 주문하기" : "카톡 문의");
   btns.appendChild(a);
+  const seller = p.link ? sellerOf(p.link) : "";
+  if (seller) {
+    const s = document.createElement("small");
+    s.className = "seller";
+    s.textContent = `${seller}에서 구매`;
+    btns.appendChild(s);
+    a.setAttribute("aria-label", `구매하기 (${seller}, 새 창)`);
+  }
   if (p.link) {
     const talk = document.createElement("a");
     talk.className = "sub-link";

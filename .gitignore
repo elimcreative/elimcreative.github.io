@@ -4,3 +4,6 @@ desktop.ini
 
 # 인스타·카톡 프로필용 (홈페이지에서 쓰지 않음)
 images/profile_round.png
+
+# 스마트스토어 상품 목록 (올리지 않음)
+products.xlsx
