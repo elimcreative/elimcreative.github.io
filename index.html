@@ -103,6 +103,9 @@
   .hero-art img { width: 100%; height: 100%; object-fit: cover; }
   .hero-art .a { inset: 0 28% 22% 0; }
   .hero-art .b { inset: 34% 0 0 46%; border: 6px solid var(--bg); }
+  /* 사진이 잘릴 때 보이는 위치 (가로 세로 %). 큰 사진은 오른쪽 아래가 작은 사진에 가려지니 꽃을 왼쪽으로 */
+  .hero-art .a img { object-position: 85% 50%; }
+  .hero-art .b img { object-position: 52% 50%; }
 
   /* Sections */
   section { padding: 88px 0; }
@@ -344,8 +347,8 @@
         </div>
       </div>
       <div class="hero-art">
-        <figure class="a"><img src="images/church_keyring.jpg" alt="말씀 캘리그라피가 적힌 아크릴 키링 다섯 개"></figure>
-        <figure class="b"><img src="images/tumbler_15oz.jpg" alt="캘리그라피 문구가 적힌 흰색 텀블러 두 개"></figure>
+        <figure class="a"><img src="images/moon_jar.jpg" alt="분홍 카네이션과 작약을 담은 달항아리 플라워"></figure>
+        <figure class="b"><img src="images/calli_frame.jpg" alt="늘 건강하고 행복하세요 손글씨와 프리저브드 플라워 캔버스 액자"></figure>
       </div>
     </div>
   </section>
