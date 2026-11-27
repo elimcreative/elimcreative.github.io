@@ -342,7 +342,7 @@
         </div>
       </div>
       <div class="hero-art">
-        <figure class="a"><img src="images/church_keyring%20(1).jpg" alt="말씀 캘리그라피가 적힌 아크릴 키링 다섯 개"></figure>
+        <figure class="a"><img src="images/church_keyring.jpg" alt="말씀 캘리그라피가 적힌 아크릴 키링 다섯 개"></figure>
         <figure class="b"><img src="images/tumbler_15oz.jpg" alt="캘리그라피 문구가 적힌 흰색 텀블러 두 개"></figure>
       </div>
     </div>
@@ -371,7 +371,7 @@
       </div>
       <div class="lines">
         <article class="line-card">
-          <img src="images/church_calendar.jpg.png" alt="말씀과 십자가 그림이 있는 2027년 패브릭 달력">
+          <img src="images/church_calendar.png" alt="말씀과 십자가 그림이 있는 2027년 패브릭 달력">
           <div>
             <h3>커스텀 굿즈</h3>
             <p>손글씨 말씀을 담은 달력·키링·텀블러, 그리고 사진 한 장으로 만드는 포토 달력·인형쿠션·타일 액자. 교회 단체 선물로도 맞춤 제작합니다.</p>
@@ -462,7 +462,7 @@
         <a class="btn primary" href="http://pf.kakao.com/_JmxbGn/chat" target="_blank" rel="noopener" id="kakao-link">카카오톡으로 문의하기</a>
       </div>
       <div class="qr">
-        <img src="images/kakao_qr.png.png" alt="카카오톡 문의 QR 코드">
+        <img src="images/kakao_qr.png" alt="카카오톡 문의 QR 코드">
         <span>QR 코드를 찍으면 바로 연결돼요</span>
       </div>
     </div>
@@ -524,12 +524,12 @@ const PRODUCTS = [
   {
     category: "포토 굿즈", name: "2027 패브릭 달력", price: "22,000원", link: STORE,
     desc: "가족사진이나 우리 아이 사진을 넣어 만드는 패브릭 벽걸이 달력입니다.",
-    images: ["calendar (1).png", "calendar (2).png"]
+    images: ["calendar.png", "calendar_2.png"]
   },
   {
     category: "포토 굿즈", name: "타일 3구 포토 액자", price: "23,900원", link: STORE,
     desc: "사진을 그림처럼 담은 타일 3장과 액자 세트입니다. 컬러와 연필 스케치 스타일 중에서 고를 수 있어요.",
-    images: ["tile3 (1).jpg", "tile3 (1).png", "tile3 (2).png", "tile3 (3).png"]
+    images: ["tile3.jpg", "tile3_2.png", "tile3_3.png", "tile3_4.png"]
   },
   {
     category: "포토 굿즈", name: "포토 머그 텀블러", price: "24,900원", link: STORE,
@@ -540,20 +540,30 @@ const PRODUCTS = [
   {
     category: "포토 굿즈", name: "반려동물 인형쿠션", price: "31,000원~", link: STORE,
     desc: "사진 속 우리 아이 모양 그대로 만든 인형쿠션입니다. 30cm, 50cm 크기로 만들 수 있어요.",
-    images: ["animal50cm cushion.jpg.png", "30cmanimal cushion.jpg.png"]
+    images: ["pet_cushion.png", "pet_cushion_2.png"]
   },
   {
-    category: "포토 굿즈", name: "인형쿠션 키링 10cm", price: "15,900원", link: STORE,
-    desc: "사진 속 모습 그대로 만든 인형쿠션을 손바닥만 한 10cm 키링으로 만들었습니다.",
+    category: "포토 굿즈", name: "인형쿠션 키링 10cm (반려동물·아기)", price: "15,900원", link: STORE,
+    desc: "사진 속 모습 그대로 만든 인형쿠션을 손바닥만 한 10cm 키링으로 만들었습니다. 반려동물뿐 아니라 아기 얼굴로도 만들 수 있어요.",
     note: "일부 이미지는 연출 이미지입니다.",
-    images: ["keyring_10cm.jpg", "keyring_10cm_2.jpg", "keyring_10cm_3.jpg", "keyring_10cm_4.jpg", "keyring_10cm_5.jpg"]
+    images: ["keyring_10cm.jpg", "keyring_10cm_2.jpg", "keyring_10cm_3.jpg", "keyring_10cm_4.jpg", "keyring_10cm_5.jpg", "keyring_baby.jpg", "keyring_baby_2.jpg"]
+  },
+  {
+    category: "포토 굿즈", name: "반려동물 초상화 머그", price: "10,900원", link: STORE,
+    desc: "반려동물 사진을 연필·수채화·포토 스타일로 담은 세라믹 머그. 이름도 함께 넣어 드려요",
+    images: ["pet_mug.jpg", "pet_mug_2.jpg", "pet_mug_3.jpg"]
+  },
+  {
+    category: "포토 굿즈", name: "패브릭 포스터 33×45", price: "22,000원", link: STORE,
+    desc: "아기·가족·반려동물 사진으로 만드는 원목봉 가랜드 패브릭 포스터. 원하는 문구 무료",
+    images: ["fabric_poster.jpg", "fabric_poster_2.jpg"]
   },
 
   /* ───── 캘리그라피·말씀 ───── */
   {
     category: "캘리그라피·말씀", name: "2027 교회 말씀 달력", price: "25,000원", link: STORE,
     desc: "말씀과 수채화 그림을 담은 패브릭 벽걸이 달력입니다. 교회 이름과 표어를 넣어 단체 제작할 수 있습니다.",
-    images: ["church_calendar.jpg.png"]
+    images: ["church_calendar.png"]
   },
   {
     category: "캘리그라피·말씀", name: "말씀 캘리그라피 텀블러", price: "24,900원", link: STORE,
@@ -568,7 +578,7 @@ const PRODUCTS = [
   {
     category: "캘리그라피·말씀", name: "말씀 아크릴 키링 + 젤펜 세트", price: "14,800원", link: STORE,
     desc: "손글씨 말씀을 담은 아크릴 키링과 같은 말씀 파츠를 단 젤펜 세트예요. 펜 색상 블랙·화이트 선택, 원하는 말씀으로 주문 제작",
-    images: ["church_keyring (1).jpg", "church_keyring (2).jpg", "pen_black.jpg", "pen_white.jpg"]
+    images: ["church_keyring.jpg", "church_keyring_2.jpg", "pen_black.jpg", "pen_white.jpg"]
   },
 
   /* ───── 플라워 ───── (이 순서대로 화면에 나옵니다. 가격 없는 상품은 link: "" 로 두면 카톡 문의 버튼) */
